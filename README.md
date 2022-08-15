@@ -1,27 +1,61 @@
-# Icarus Executor
 
-Icarus Is a Lightweight, Minimal, Lua Executor Written In C#
+<h1 align="center">
+  <br>
+  <a href="https://github.com/PersonWithEars/IcarusExecutor/blob/main/I.png"><img src="https://raw.githubusercontent.com/PersonWithEars/IcarusExecutor/main/I.png" alt="Markdownify" width="200"></a>
+  <br>
+  Icarus
+  <br>
+</h1>
 
-## Features 
+<h4 align="center">A Lightweight, Minimal, Lua Executor Written In C# <a href="http://electron.atom.i" target="_blank"></a>.</h4>
 
-- Simple
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#download">Download</a> •
+  <a href="#faq">FAQ</a> •
+  <a href="#credits">Credits</a> •
+  <a href="#license">License</a>
+</p>
 
-- Keyless
 
-- Most Scripts Supported
+<h1 align="center">
+  <br>
+  <a href="https://github.com/PersonWithEars/IcarusExecutor/blob/main/UIExample.PNG"><img src="https://raw.githubusercontent.com/PersonWithEars/IcarusExecutor/main/UIExample.PNG" alt="Markdownify" width="800"></a>
+  <br>
 
-## Installation
+  <br>
+</h1>
+
+
+## Key Features
+
+* Simple
+  - Allows complete beginners to start scripting
+* Keyless
+  - You do not need to go through a huge process to obtain a key.
+* Nearly All Scripts Supported
+* Syntax highlighting
+* Script List
+* Dark mode
+
+## How To Use
 
 Download the latest [release](https://github.com/PersonWithEars/IcarusExecutor/releases/) to use Icarus, Unzip, then run Icarus.exe
-## Upcoming Features
 
-Auto-Injecting
+Run roblox then hit attach on the Injector, wait around 10 seconds for it to attach.
 
-Switching Between APIs
+Then hit execute to run your script.
 
-FPS-Unlocker
 
-Large Script Library
+
+> **Note**
+> If you are using  a Mac, this wil not work.
+
+
+## Download
+
+### [Latest Release](https://github.com/PersonWithEars/IcarusExecutor/releases/) 
 
 ## FAQ
 
@@ -43,9 +77,19 @@ A: That Happens Every Now And Then, Just Close Roblox And Re-Try.
 
 ---
 
-## UI
 
-![image](https://github.com/PersonWithEars/IcarusExecutor/blob/main/UIExample.PNG)
+## Credits
+
+This software uses the following resources:
+
+- [Void/PersonWithEars](https://github.com/PersonWithEars)
+- [FastColoredTextBox](https://github.com/PavelTorgashov/FastColoredTextBox)
+- [We Are Devs C# API](https://wearedevs.net/d/Exploit%20API)
+
+
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
+MIT
+
+
