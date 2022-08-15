@@ -25,7 +25,7 @@ A: It Falsely Flags All Executors As Virus Due To The API's, Its Safe.
 
 Q: It Isnt Attaching And Says The .DLL is missing.
 
-A: Your Anti-Virus Deleted Necessary Files For The Executor, Turn Off Active Protection Or Set In Exclusion For The Folder Of The Executor.
+A: Your Anti-Virus Deleted Necessary Files For The Executor, Turn Off Active Protection Or Set An Exclusion For The Folder Of The Executor.
 
 ---
 
