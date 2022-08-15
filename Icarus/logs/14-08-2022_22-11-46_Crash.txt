@@ -1,0 +1,520 @@
+[Code = 0xC0000005]
+[ExceptSymbol = NoSym]
+[Eip = 0x77D17A6E]
+[Eax = 0x00000003]
+[Ebx = 0x0F6610D8]
+[Ecx = 0xFFFFFFE0]
+[Edx = 0x0000000C]
+[Esi = 0x0F6610CC]
+[Edi = 0x2D966448]
+[Ebp = 0x0958FF00]
+[Esp = 0x0958FEF8]
+[Dll Base = 0x00000000]
+
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x016F394D]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x00808767]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x00C50B3B]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x016DDFAC]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x016CFD3A]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x0169D17D]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x0169C942]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x0169E459]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x00872A77]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x0086F375]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x009371F9]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x00936263]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x00935456]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x00946230]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x0094505B]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x00943BDC]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x00940CEB]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x0093FB41]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x009E248D]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x01319FC0]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x01319B21]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x013129AD]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x01312A9A]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: RobloxPlayerBeta.exe]  [RebaseAddr: 0x02301AB2]  [BaseAddr: 0x00140000]
+[File: UnkFile] [Module: KERNEL32.DLL]          [RebaseAddr: 0x0041FA29]  [BaseAddr: 0x76BF0000]
+[File: UnkFile] [Module: ntdll.dll]             [RebaseAddr: 0x00467A9E]  [BaseAddr: 0x77CB0000]
+[File: UnkFile] [Module: ntdll.dll]             [RebaseAddr: 0x00467A6E]  [BaseAddr: 0x77CB0000]
+
+-- Written by ShowerHead & IDev
+
+repeat wait() until game:IsLoaded()
+
+local old_require = getrenv().require
+local setidentity = set_thread_context
+local a = raw_http_add_header
+local raw_request_backup = raw_request;
+
+getgenv().require = function(script)
+    local old_identity = setidentity(2)
+    local success, err = pcall(old_require, script)
+    setidentity(old_identity)
+    assert(success, err)
+    
+    return err
+end
+
+local settings = settings();
+local getfflag_bk = clonefunc(settings.GetFFlag)
+local reg = clonefunc(getreg)
+
+getgenv().getfflag = newcclosure(function(flag)
+    return getfflag_bk(settings, flag)
+end)
+
+getgenv().getinstances = newcclosure(function()
+    local Table = {}
+    for i,v in pairs(reg()) do
+        if type(v) == "table" then
+            for I,V in pairs(v) do
+                if typeof(V) == "Instance" then
+                    table.insert(Table, V)
+                end
+            end
+        end
+    end
+    return Table
+end)
+
+getgenv().getnilinstances = newcclosure(function()
+    local Table = {}
+    for i,v in pairs(reg()) do
+        if type(v) == "table" then
+            for I,V in pairs(v) do
+                if typeof(V) == "Instance" and V.Parent == nil then
+                    table.insert(Table, V)
+                end
+            end
+        end
+    end
+    return Table
+end)
+
+getgenv().getscripts = newcclosure(function()
+    local ret = {}
+    for i,v in pairs(getinstancecache()) do
+        if v.ClassName == "ModuleScript" or v.ClassName == "LocalScript" then
+            table.insert(ret, v)
+        end
+    end
+    return ret
+end)
+
+getgenv().get_nil_instances = getnilinstances
+
+local upval,upval1,upval2,upval3,upval4,upval5,upval6,upval7,upval8,upval9,upval10
+
+if raw_request_counter then
+    local get_request_id = raw_request_counter;
+    local raw_async_response_backup = raw_async_response
+
+    getgenv().request = function(b)
+        local upva,upva1,upva2, upva3, upva4, upva5, upva6, upva7, upva8, upva9, upva10 = upval, upval1, upval2, upval3, upval4, upval5, upval6, upval7,upval8, upval9, upval10
+       
+        if typeof(b) != "table" then
+            error("Bad argument to 'http_request' (#1) | Expected table.")
+        end
+
+        local ReqUrl = b.Url
+
+        if typeof(ReqUrl) != "string" then
+            error("Bad argument to 'http_request' Url Field, expected string.")
+        end
+
+        local ReqMethod = b.Method
+
+        if typeof(ReqMethod) != "string" then
+            ReqMethod = "GET"
+        end
+
+        if b.Headers then
+            for c, d in pairs(b.Headers) do
+                a(c, d, true)
+            end
+        end
+        if b.Cookies then
+            for c, d in pairs(b.Cookies) do
+                a(c, d, false)
+            end
+        end
+
+        local request_count = tostring(get_request_id() + 1);
+    
+        raw_request_backup(b, ReqUrl, ReqMethod)
+            
+        local url = request_count
+        local result = raw_async_response_backup(url)
+            
+        while result == url do
+            task.wait()
+            result = raw_async_response_backup(url)
+        end
+    
+        return result;
+    end  
+    getgenv().raw_request_counter = nil
+elseif raw_request_count then
+    local get_request_id = raw_request_count;
+    local raw_async_response_backup = raw_async_response
+
+    getgenv().request = function(b)
+        local upva,upva1,upva2, upva3, upva4, upva5, upva6, upva7, upva8, upva9, upva10 = upval, upval1, upval2, upval3, upval4, upval5, upval6, upval7,upval8, upval9, upval10
+        if b.Headers then
+            for c, d in pairs(b.Headers) do
+                a(c, d, true)
+            end
+        end
+        if b.Cookies then
+            for c, d in pairs(b.Cookies) do
+                a(c, d, false)
+            end
+        end
+
+        raw_request_backup(b)
+        
+        local url = b.Url
+        local result = raw_async_response_backup(url)
+        
+        while result == url do
+            task.wait()
+            result = raw_async_response_backup(url)
+        end
+
+        return result;
+    end  
+    getgenv().raw_request_count = nil  
+else
+    getgenv().request = newcclosure(function(b)       
+        if typeof(b) != "table" then
+            error("Bad argument to 'http_request' (#1) | Expected table.")
+        end
+
+        local ReqUrl = b.Url
+
+        if typeof(ReqUrl) != "string" then
+            error("Bad argument to 'http_request' Url Field, expected string.")
+        end
+
+        local ReqMethod = b.Method
+
+        if typeof(ReqMethod) != "string" then
+            ReqMethod = "GET"
+        end
+
+        if b.Headers then
+            for c, d in pairs(b.Headers) do
+                a(c, d, true)
+            end
+        end
+
+        if b.Cookies then
+            for c, d in pairs(b.Cookies) do
+                a(c, d, false)
+            end
+        end    
+        
+        return raw_request_backup(b, ReqUrl, ReqMethod);
+    end) 
+end
+
+getgenv().raw_request = nil
+getgenv().raw_request_backup = nil
+                                                                                            
+local exploit = identifyexecutor();
+
+if exploit != "WeAreDevs" then
+    getgenv().syn_getinstances = getinstances
+    getgenv().syn_getfflag = getfflag
+
+    getgenv().firesignal = newcclosure(function(signal, ...)
+        assert(signal, "i want signal");
+        for i,v in pairs(getconnections(signal)) do
+            v.Function(...)
+        end
+    end)
+    
+    getgenv().LoadLibrary = newcclosure(function(x)
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox/Core-Scripts/master/CoreScriptsRoot/Libraries/" .. x .. ".lua", true))()
+    end)
+
+    getgenv().gethui = newcclosure(function()
+        return game:GetService("CoreGui")
+    end)
+
+    local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/' -- You will need this for encoding/decoding
+    -- encoding
+    getgenv().base64_encode = newcclosure(function(data)
+        return ((data:gsub('.', function(x) 
+            local r,b='',x:byte()
+            for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end
+            return r;
+        end)..'0000'):gsub('%d%d%d?%d?%d?%d?', function(x)
+            if (#x < 6) then return '' end
+            local c=0
+            for i=1,6 do c=c+(x:sub(i,i)=='1' and 2^(6-i) or 0) end
+            return b:sub(c+1,c+1)
+        end)..({ '', '==', '=' })[#data%3+1])
+    end)
+    -- decoding
+    getgenv().base64_decode = newcclosure(function(data)
+        data = string.gsub(data, '[^'..b..'=]', '')
+        return (data:gsub('.', function(x)
+            if (x == '=') then return '' end
+            local r,f='',(b:find(x)-1)
+            for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end
+            return r;
+        end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+            if (#x ~= 8) then return '' end
+            local c=0
+            for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
+                return string.char(c)
+        end))
+    end)
+    
+    if messagebox and returnmessagebox then
+        local retbox = returnmessagebox;
+        local raw_box = messagebox;
+        
+        getgenv().messagebox = function(text,capt,flag)
+            local res
+            
+              sync = game:GetService("RunService").Heartbeat:Connect(function()
+                sync:Disconnect()     
+                
+                raw_box(text, capt, flag)       
+            end)
+                
+            res = retbox()
+            while(res == 404) do 
+                res = retbox()
+                task.wait()
+            end
+                
+            return res
+        end
+        getgenv().messageboxasync = messagebox
+        getgenv().returnmessagebox = nil;
+    end
+end
+
+if rconsoleinput and returnrconsoleinput then
+    local retinput = returnrconsoleinput;
+    local raw_input = rconsoleinput;
+    
+    getgenv().rconsoleinput = function(text,capt,flag)
+        local res
+        
+          sync = game:GetService("RunService").Heartbeat:Connect(function()
+            sync:Disconnect()     
+            
+            raw_input()       
+        end)
+            
+        res = retinput()
+        while(res == "ca3c87c828f3ddb9c7c5bbcbd69bd9f4") do 
+            res = retinput()
+            task.wait()
+        end
+            
+        return res
+    end
+    getgenv().rconsoleinputasync = rconsoleinput
+    getgenv().returnrconsoleinput = nil;
+end
+
+if cloneinstance then
+    local reg = getreg;
+    local cache_list = nil;
+    getgenv().getinstancecache = newcclosure(function()
+        if cache_list == nil then
+            for i, v in pairs(reg()) do
+                if type(i) == "userdata" and type(v) == "table" and rawget(v, "__mode") then
+                    for I,V in pairs(v) do
+                        if V == game.Players then
+                            cache_list = v
+                            return v
+                        end
+                    end
+                end
+            end
+        else
+            return cache_list
+        end
+    end)
+
+    local instance_cache = getinstancecache
+    local clone_inst = cloneinstance
+    function get_cache_key(cache_list, inst)
+        for i,v in pairs(cache_list) do
+            if v == inst then
+                return i
+            end
+        end
+    end
+    
+    getgenv().cloneref = newcclosure(function(inst)
+        if type(inst) != "userdata" then
+            return error("Bad argument to 'cloneref' (#1) | Expected userdata<Instance>.")
+        end
+        
+        if typeof(inst) != "Instance" then
+            return error("Bad argument to 'cloneref' (#1) | Expected userdata<Instance>.")
+        end
+    
+        local cache_list = instance_cache()
+        local key = get_cache_key(cache_list,inst);
+        
+        local old_val = cache_list[key]
+        cache_list[key] = nil;
+        
+        local ret = clone_inst(inst)
+    
+        cache_list[key] = old_val
+    
+        return ret
+    end)
+    getgenv().cloneinstance = nil
+end
+
+if getproperties_raw then
+    local getproperties_raw_backup = getproperties_raw;
+
+    getgenv().getproperties = newcclosure(function(instance)
+        
+        if typeof(instance) != "Instance" then
+            return error("Bad argument to 'getproperties' (#1) | Expected Instance.")
+        end
+
+        local list = {}
+        for _, v in pairs(getproperties_raw_backup(instance)) do
+            pcall(function()
+                list[v] = gethiddenproperty(instance, v)
+            end)
+        end
+        
+        return list
+    end)
+    getgenv().getprops = getproperties
+    
+    getgenv().getproperties_raw = nil
+end
+
+if exploit == "Fluxus" or exploit == "Trigon" or exploit == "Evon" then
+    getgenv().Fluxus = {
+        Base64 = {
+            Encode = base64_encode;
+            Decode = base64_decode;
+        };
+        crypt = {
+            hash = sha384_hash;
+            base64 = {
+                encode = base64_encode;
+                decode = base64_decode;
+            };
+        };
+        request = request;
+        set_thread_identity = set_thread_identity;
+        get_thread_identity = get_thread_identity;
+        write_clipboard = setclipboard;
+        queue_on_teleport = queue_on_teleport;
+        protect_gui = gethui;
+        unprotect_gui = function() end;
+        is_beta = function() return false end;
+        cache_replace = cache.replace;
+        cache_invalidate = cache.invalidate;
+        is_cached = cache.iscached;
+    }
+
+
+    function Fluxus:LoadAsync(url)
+        return loadstring(game:HttpGetAsync(url))()
+    end
+
+    setreadonly(Fluxus, true)
+
+    getgenv().Krnl = Fluxus; 
+    getgenv().fluxus = Fluxus;
+    getgenv().krnl = Fluxus; 
+    getgenv().syn = Fluxus;
+elseif exploit == "OxygenU" then
+    getgenv().Oxygen = {
+        Base64 = {
+            Encode = base64_encode;
+            Decode = base64_decode;
+        };
+        crypt = {
+            hash = sha384_hash;
+            base64 = {
+                encode = base64_encode;
+                decode = base64_decode;
+            };
+        };
+        set_thread_identity = set_thread_identity;
+        get_thread_identity = get_thread_identity;
+        write_clipboard = setclipboard;
+        queue_on_teleport = queue_on_teleport;
+        protect_gui = gethui;
+        unprotect_gui = function() end;
+        request = request;
+        cache_replace = cache.replace;
+        cache_invalidate = cache.invalidate;
+        is_cached = cache.iscached;
+    }
+    
+    setreadonly(Oxygen, true)
+end
+
+local bruh = {}
+for i,v in pairs(bit32) do
+    bruh[i] = v
+end
+    
+bruh.badd = newcclosure(function(a,b)
+    assert(a, "Invalid argument to #1, expected number got nil")
+    assert(b, "Invalid argument to #2, expected number got nil")
+    return a+b
+end)
+bruh.bsub = newcclosure(function(a,b)
+    assert(a, "Invalid argument to #1, expected number got nil")
+    assert(b, "Invalid argument to #2, expected number got nil")
+    return a-b
+end)
+    
+bruh.bdiv = newcclosure(function(a,b)
+    assert(a, "Invalid argument to #1, expected number got nil")
+    assert(b, "Invalid argument to #2, expected number got nil")
+    return a/b
+end)
+    
+bruh.bmul = newcclosure(function(a,b)
+    assert(a, "Invalid argument to #1, expected number got nil")
+    assert(b, "Invalid argument to #2, expected number got nil")
+    return a*b
+end)
+    
+getgenv().bit = bruh
+getgenv().bit32 = bruh
+    
+setreadonly(bit, true)
+
+getgenv().raw_async_response = nil
+getgenv().raw_http_add_header = nil
+getgenv().http_request = request
+
+if auto_execute_init then
+    pcall(auto_execute_init)
+end
+
+getgenv().auto_execute_init = nil; 
+
+if getcallbackvalue then
+    getgenv().getcallbackvalue = nil
+end
+
+local exploit, name = identifyexecutor()
+if ename == "Linux" then
+    Parent=Instance.new("ScreenGui")Parent.Parent=game:GetService("CoreGui").RobloxGui;Parent.Name="NiggaView"Parent.IgnoreGuiInset=true;local a=math.floor;local b={Visible=true,Transparency=true,Color=true,Thickness=true}local c={PointA=true,PointB=true,PointC=true,PointD=true,A=1,B=2,C=3,D=4}local function e()local f={newDrawing("Line"),newDrawing("Line"),newDrawing("Line"),newDrawing("Line")}local g;g=setmetatable({Remove=function(self)setmetatable(g,{})self.Remove=nil;for h=1,4 do f[h]:Remove()end end},{__newindex=function(self,i,j)if b[i]then for h=1,4 do f[h][i]=j end;return end;local k=c[i]if k then k=c[tostring(i):sub(-1)]f[k].From=j;f[k+1-a(k/4)*4].To=j;return end end})return g end;local function l(m,n,o)local p=2;if not n then n=UDim2.new(0,0,0,0)else n=UDim2.new(0,n.X,0,n.Y)end;if not m then m=UDim2.new(0,0,0,0)else m=UDim2.new(0,m.X,0,m.Y)end;local q,r=n.X.Offset-m.X.Offset,n.Y.Offset-m.Y.Offset;local h=(q*q+r*r)^.5;local s=math.atan2(r,q)o.Size=UDim2.new(0,h,0,p)local t,u=0.5*(m.X.Offset+n.X.Offset),0.5*(m.Y.Offset+n.Y.Offset)o.Position=UDim2.new(0,t-0.5*h,0,u-0.5*p)o.Rotation=math.deg(s)o.BorderSizePixel=0;return o end;getgenv().Drawing={}make_writeable(Drawing)Parent=Instance.new("ScreenGui")Parent.Parent=game:GetService("CoreGui").RobloxGui;Parent.Name="NiggaView"Parent.IgnoreGuiInset=true;local function l(m,n,o)local p=2;if not n then n=UDim2.new(0,0,0,0)else n=UDim2.new(0,n.X,0,n.Y)end;if not m then m=UDim2.new(0,0,0,0)else m=UDim2.new(0,m.X,0,m.Y)end;local q,r=n.X.Offset-m.X.Offset,n.Y.Offset-m.Y.Offset;local h=(q*q+r*r)^.5;local s=math.atan2(r,q)o.Size=UDim2.new(0,h,0,p)local t,u=0.5*(m.X.Offset+n.X.Offset),0.5*(m.Y.Offset+n.Y.Offset)o.Position=UDim2.new(0,t-0.5*h,0,u-0.5*p)o.Rotation=math.deg(s)o.BorderSizePixel=0;return o end;Drawing.Fonts={}Drawing.Fonts.Plex=0;Drawing.Fonts.Monospace=1;Drawing.Fonts.System=2;Drawing.Fonts.UI=3;Drawing.new=newcclosure(function(v)if v=="Line"then local w={}local x=Instance.new("Frame",Parent)x.ZIndex=3000;return setmetatable({},{__index=function(self,y)if y=="Remove"then x:Destroy()return function()end end;return w[y]end,__newindex=function(self,y,z)w[y]=z;if y=="Visible"then x.Visible=z end;if y=="Color"then x.BackgroundColor3=z end;if y=="Transparency"then x.BackgroundTransparency=math.clamp(1-z,0,1)end;if y=="From"then d=l(w.From,w.To,x)return nil end;if y=="To"then d=l(w.From,w.To,x)return nil end end})end;if v=="Circle"then local A={}local B=Instance.new("Frame",Parent)B.BorderSizePixel=0;B.AnchorPoint=Vector2.new(0.5,0.5)Instance.new("UICorner",B).CornerRadius=UDim.new(1,0)return setmetatable({},{__index=function(self,y)if y=="Remove"then return function()B:Destroy()end end;return A[y]end,__newindex=function(self,y,z)A[y]=z;if y=="Visible"then B.Visible=z end;if y=="Transparency"then B.BackgroundTransparency=1-z end;if y=="Color"then B.BackgroundColor3=z end;if y=="Position"then B.Position=UDim2.new(0,z.X,0,z.Y)end;if y=="Radius"then B.Size=UDim2.new(0,z*2,0,z*2)end end})end;if v=="Text"then local C={}local D=Instance.new("TextLabel",Parent)D.BorderSizePixel=0;D.AnchorPoint=Vector2.new(0.5,0.5)return setmetatable({},{__index=function(self,y)if y=="Remove"then return function()D:Destroy()end end;return C[y]end,__newindex=function(self,y,z)C[y]=z;if y=="Visible"then D.Visible=z end;if y=="Color"then D.TextColor3=z end;if y=="Position"then D.Position=UDim2.new(0,z.X,0,z.Y)end;if y=="Transparency"then D.TextTransparency=math.clamp(1-z,0,1)end;if y=="Size"then D.TextSize=z-10 end;if y=="Text"then D.Text=z end end})end;if v=="Quad"then return e()end;if v=="Square"then local E={}local F=Instance.new("Frame",Parent)F.BorderSizePixel=0;return setmetatable({},{__index=function(self,y)if y=="Remove"then return function()F:Destroy()end end;return E[y]end,__newindex=function(self,y,z)E[y]=z;if y=="Visible"then E.Visible=true;F.Visible=z end;if y=="Color"then F.BackgroundColor3=z end;if y=="Transparency"then F.BackgroundTransparency=math.clamp(1-z,0,1)end;if y=="Position"then F.Position=UDim2.new(0,z.X,0,z.Y)end;if y=="Size"then F.Size=UDim2.new(0,z.X,0,z.Y)end end})end end)
+end
