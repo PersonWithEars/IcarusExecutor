@@ -4,6 +4,10 @@ Icarus Is a Lightweight, Minimal, Lua Executor.
 
 ## Features
 
+- Keyless Design
+
+- Light Weight Performance
+
 - 
 
 ## Installation
