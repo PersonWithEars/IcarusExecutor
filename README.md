@@ -12,8 +12,7 @@ Icarus Is a Keyless, Lightweight, Minimal, Lua Executor.
 
 ## Installation
 
-Download the latest [release](https://github.com/PersonWithEars/IcarusExecutor/releases/) to use Icarus.
-
+Download the latest [release](https://github.com/PersonWithEars/IcarusExecutor/releases/) to use Icarus, Unzip, then run Icarus.exe
 ## Upcoming Features
 
 Auto-Injecting
