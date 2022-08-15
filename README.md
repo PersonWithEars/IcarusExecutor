@@ -14,6 +14,15 @@ Icarus Is a Keyless, Lightweight, Minimal, Lua Executor.
 
 Download the latest [release](https://github.com/PersonWithEars/IcarusExecutor/releases/) to use Icarus.
 
+## Upcoming Features
+
+Auto-Injecting
+
+Switching Between APIs
+
+FPS-Unlocker
+
+Large Script Library
 
 ## FAQ
 
