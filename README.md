@@ -1,6 +1,6 @@
 # Icarus Executor
 
-Icarus Is a Lightweight, Minimal, Lua Executor.
+Icarus Is a Lightweight, Minimal, Lua Executor Written In C#
 
 ## Features 
 
