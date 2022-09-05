@@ -3,7 +3,7 @@
   <br>
   <a href="https://github.com/PersonWithEars/IcarusExecutor/blob/main/I.png"><img src="https://raw.githubusercontent.com/PersonWithEars/IcarusExecutor/main/I.png" alt="Markdownify" width="200"></a>
   <br>
-  Icarus
+  Icarus (Discontinued)
   <br>
 </h1>
 
