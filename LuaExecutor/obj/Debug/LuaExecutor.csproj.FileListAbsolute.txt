@@ -1,0 +1,15 @@
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\bin\Debug\LuaExecutor.exe.config
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\bin\Debug\LuaExecutor.exe
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\bin\Debug\LuaExecutor.pdb
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\bin\Debug\FastColoredTextBox.dll
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\bin\Debug\WeAreDevs_API.dll
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.csproj.AssemblyReference.cache
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.csproj.SuggestedBindingRedirects.cache
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.Form1.resources
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.Properties.Resources.resources
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.csproj.GenerateResource.cache
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.csproj.CoreCompileInputs.cache
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.csproj.CopyComplete
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.exe
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.pdb
+C:\Users\n31ld\source\repos\LuaExecutor\LuaExecutor\obj\Debug\LuaExecutor.Form2.resources
